@@ -4,14 +4,19 @@ import './index.css'
 import App from './App.jsx'
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { createBrowserRouter } from "react-router";
-import { RouterProvider } from "react-router/dom";
+import { createBrowserRouter , RouterProvider } from 'react-router-dom';
+
 import Root from './Components/Root/Root.jsx';
 import Home from './Components/Home/Home.jsx';
 import Mobile from './Components/Mobile/Mobile.jsx';
 import Laptop from './Components/Laptop/Laptop.jsx';
 import SideBar from './Components/SideBar/SideBar.jsx';
+import Users from './Components/Users/Users.jsx';
+import { Suspense } from 'react';
+import Users2 from './Components/Users2/Users2.jsx';
+import User from './Components/User/User.jsx';
 
+const usePromise=fetch('https://jsonplaceholder.typicode.com/users').then(res=>res.json());
 const router = createBrowserRouter([
   {
     path: "/", Component:Root,
@@ -19,7 +24,18 @@ const router = createBrowserRouter([
       { index:true,Component: Home },
       {path:'mobile', Component: Mobile},
       {path:'laptop',Component:Laptop},
-      {path:'sideBbar',Component:SideBar},
+      {path:'sideBar',Component:SideBar},
+      {
+        path:'users',Component:Users,
+        loader:()=> fetch('https://jsonplaceholder.typicode.com/users')
+      },
+      {
+        path:'users2', 
+        element:<Suspense fallback={<span>Loading.....</span>}>
+        <Users2 usePromise={usePromise}></Users2>
+        </Suspense>
+      },
+      {path:'user',Component: User},
     ]
   },
   {
