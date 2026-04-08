@@ -15,6 +15,7 @@ import Users from './Components/Users/Users.jsx';
 import { Suspense } from 'react';
 import Users2 from './Components/Users2/Users2.jsx';
 import User from './Components/User/User.jsx';
+import UserDetails from './Components/UserDetails/UserDetails.jsx';
 
 const usePromise=fetch('https://jsonplaceholder.typicode.com/users').then(res=>res.json());
 const router = createBrowserRouter([
@@ -35,7 +36,7 @@ const router = createBrowserRouter([
         <Users2 usePromise={usePromise}></Users2>
         </Suspense>
       },
-      {path:'user',Component: User},
+      {path:'users/:userId', Component:UserDetails}
     ]
   },
   {
